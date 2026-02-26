@@ -46,8 +46,12 @@ async fn real_main() -> ApiResult<()> {
 
     let amqp = lapin::Connection::connect(
         format!(
-            "amqp://{}:{}@{}:{}/%2f",
-            CONFIG.rabbit_username, CONFIG.rabbit_password, CONFIG.rabbit_host, CONFIG.rabbit_port
+            "amqp://{}:{}@{}:{}/{}",
+            CONFIG.rabbit_username,
+            CONFIG.rabbit_password,
+            CONFIG.rabbit_host,
+            CONFIG.rabbit_port,
+            CONFIG.rabbit_vhost.replace('/', "%2f")
         )
         .as_str(),
         ConnectionProperties::default(),
